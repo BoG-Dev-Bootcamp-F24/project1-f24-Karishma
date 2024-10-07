@@ -1,21 +1,39 @@
-import { useState, useEffect } from 'react'
-import './App.css'
-
+import { useState, useEffect } from 'react';
+import './App.css';
 
 function App() {
   const [pokemon, setPokemon] = useState({});
   const [pokemonId, setPokemonId] = useState(1);
-  const [activeSection, setActiveSection] = useState('info')
+  const [activeSection, setActiveSection] = useState('info');
 
-  // Fetch Pokémon data
+  const typeColors = {
+    normal: '#A8A77A',
+    fire: '#EE8130',
+    water: '#6390F0',
+    electric: '#F7D02C',
+    grass: '#7AC74C',
+    ice: '#96D9D6',
+    fighting: '#C22E28',
+    poison: '#A33EA1',
+    ground: '#E2BF65',
+    flying: '#A98FF3',
+    psychic: '#F95587',
+    bug: '#A6B91A',
+    rock: '#B6A136',
+    ghost: '#735797',
+    dragon: '#6F35FC',
+    dark: '#705746',
+    steel: '#B7B7CE',
+    fairy: '#D685AD',
+  };
+
   useEffect(() => {
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`)
       .then((response) => response.json())
       .then((data) => setPokemon(data))
       .catch((error) => console.error(error));
   }, [pokemonId]);
-  
-  // Functions to handle next and previous Pokémon
+
   const nextPokemon = () => setPokemonId((prev) => prev + 1);
   const prevPokemon = () => setPokemonId((prev) => Math.max(1, prev - 1));
 
@@ -26,27 +44,39 @@ function App() {
       <div className="pokedex">
         {/* Pokémon Display Section */}
         <div className="pokemon-display">
-          <h2>{pokemon.name ? pokemon.name.toUpperCase() : 'Loading...'}</h2>
-          <img
+          <img className="pokemon-image"
             src={pokemon.sprites?.front_default}
             alt={pokemon.name}
-            width="200"
-            height="200"
+            width="400px"
+            height="400px"
           />
-          <p>Type: {pokemon.types?.map((type) => type.type.name).join(', ')}</p>
+          <br></br>
+          <div className="pokemon-name-card">
+            <p>{pokemon.name ? pokemon.name.toUpperCase() : 'Loading...'}</p>
+          </div>
+          <div className="pokemon-types">
+            <strong>Type: </strong>
+            {pokemon.types?.map((typeObj, index) => (
+              <span
+                key={index}
+                className="pokemon-type"
+                style={{ backgroundColor: typeColors[typeObj.type.name] }}
+              >
+                {typeObj.type.name}
+              </span>
+            ))}
+          </div>
           {/* Navigation Buttons */}
-        <div className="navigation">
-          <button onClick={prevPokemon}>Previous</button>
-          <button onClick={nextPokemon}>Next</button>
-        </div>
+          <div className="navigation">
+            <button onClick={prevPokemon}>{'<'}</button>
+            <button onClick={nextPokemon}>{'>'}</button>
+          </div>
+
         </div>
 
         {/* Info and Moves Section */}
+        <div className="pokemon-info-section">
         <div className="pokemon-info-card">
-          {/* Buttons to Toggle Sections */}
-          
-
-          {/* Conditional Rendering Based on Active Section */}
           {activeSection === 'info' ? (
             <div>
               <h3>Info</h3>
@@ -70,27 +100,28 @@ function App() {
               </ul>
             </div>
           )}
-
-<div className="section-buttons">
-            <button
-              className={`info-button ${activeSection === 'info' ? 'active' : ''}`}
-              onClick={() => setActiveSection('info')}
-            >
-              Info
-            </button>
-            <button
-              className={`moves-button ${activeSection === 'moves' ? 'active' : ''}`}
-              onClick={() => setActiveSection('moves')}
-            >
-              Moves
-            </button>
-          </div>
         </div>
-
-        
+         {/* Info and Moves Buttons */}
+         <div className="section-buttons">
+          <button
+            className={`info-button ${activeSection === 'info' ? 'active' : ''}`}
+            onClick={() => setActiveSection('info')}
+          >
+            Info
+          </button>
+          <button
+            className={`moves-button ${activeSection === 'moves' ? 'active' : ''}`}
+            onClick={() => setActiveSection('moves')}
+          >
+            Moves
+          </button>
+        </div>   
+        </div>
       </div>
+        
+        
     </div>
   );
 }
 
-export default App
+export default App;
