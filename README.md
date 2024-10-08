@@ -9,7 +9,7 @@ In this project, you'll be creating a frontend that graphically displays Pokémo
 - Navigate to your new project folder and create your HTML, CSS, and JS files
 
 # Submission Instructions
-- Create a 0.5-3 minute video walkthrough of your project (include the video link in the README of your project repo)
+- Create a 0.5-3 minute video walkthrough of your project (include the video link in the README of your project repo)-> Link: https://youtu.be/M4Hi6Ypqb6s
 - Push all your changes to the remote repository. Make sure that the owner is BoG-Dev-Bootcamp-F24 so that we can see the repository! (if you forgot to do this, you can alternatively message Oscar on Slack with the link to your repo)
 - **Due Date:** 10-1-2023
 
